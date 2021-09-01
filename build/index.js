@@ -42,24 +42,34 @@ function __spreadArrays() {
 }
 
 var ImageMapper = function (_a) {
-    var src = _a.src, map = _a.map, _b = _a.fillColor, fillColor = _b === void 0 ? 'rgba(255, 255, 255, 0.5)' : _b, _c = _a.strokeColor, strokeColor = _c === void 0 ? 'rgba(0, 0, 0, 0.5)' : _c, _d = _a.lineWidth, lineWidth = _d === void 0 ? 1 : _d, width = _a.width, height = _a.height, active = _a.active, imgWidth = _a.imgWidth, onLoad = _a.onLoad, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave, onMouseMove = _a.onMouseMove, onImageClick = _a.onImageClick, onImageMouseMove = _a.onImageMouseMove;
-    var absPos = { position: 'absolute', top: 0, left: 0 };
+    var src = _a.src, map = _a.map, _b = _a.fillColor, fillColor = _b === void 0 ? "rgba(255, 255, 255, 0.5)" : _b, _c = _a.strokeColor, strokeColor = _c === void 0 ? "rgba(0, 0, 0, 0.5)" : _c, _d = _a.highlightColor, highlightColor = _d === void 0 ? 'rgba(255, 255, 255, 0.5)' : _d, highlightArea = _a.highlightArea, _e = _a.lineWidth, lineWidth = _e === void 0 ? 1 : _e, width = _a.width, height = _a.height, active = _a.active, imgWidth = _a.imgWidth, multiple = _a.multiple, onLoad = _a.onLoad, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave, onMouseMove = _a.onMouseMove, onImageClick = _a.onImageClick, onImageMouseMove = _a.onImageMouseMove;
+    var absPos = { position: "absolute", top: 0, left: 0 };
     var styles = {
-        container: { position: 'relative' },
-        canvas: __assign(__assign({}, absPos), { pointerEvents: 'none', zIndex: 2 }),
-        img: __assign(__assign({}, absPos), { zIndex: 1, userSelect: 'none' }),
-        map: (onClick && { cursor: 'pointer' }) || undefined
+        container: { position: "relative" },
+        canvas: __assign(__assign({}, absPos), { pointerEvents: "none", zIndex: 2 }),
+        img: __assign(__assign({}, absPos), { zIndex: 1, userSelect: "none" }),
+        map: (onClick && { cursor: "pointer" }) || undefined,
     };
     var img = React.useRef(null);
     var container = React.useRef(null);
     var canvas = React.useRef(null);
     React.useEffect(function () {
         initCanvas();
-    }, [src, map, fillColor, strokeColor, lineWidth, width, height, active, imgWidth]);
+    }, [
+        src,
+        map,
+        fillColor,
+        strokeColor,
+        lineWidth,
+        width,
+        height,
+        active,
+        imgWidth,
+    ]);
     var drawrect = function (coords, fillColor, lineWidth, strokeColor) {
         var _a;
         var left = coords[0], top = coords[1], right = coords[2], bot = coords[3];
-        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext('2d');
+        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext("2d");
         if (!ctx)
             return;
         ctx.fillStyle = fillColor;
@@ -71,7 +81,7 @@ var ImageMapper = function (_a) {
     };
     var drawcircle = function (coords, fillColor, lineWidth, strokeColor) {
         var _a;
-        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext('2d');
+        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext("2d");
         if (!ctx)
             return;
         ctx.fillStyle = fillColor;
@@ -87,7 +97,7 @@ var ImageMapper = function (_a) {
     var drawpoly = function (coords, fillColor, lineWidth, strokeColor) {
         var _a;
         var coords1 = coords.reduce(function (a, _, i, s) { return (i % 2 ? a : __spreadArrays(a, [s.slice(i, i + 2)])); }, []);
-        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext('2d');
+        var ctx = (_a = canvas.current) === null || _a === void 0 ? void 0 : _a.getContext("2d");
         if (!ctx)
             return;
         ctx.fillStyle = fillColor;
@@ -110,25 +120,29 @@ var ImageMapper = function (_a) {
             img.current.height = height;
         canvas.current.width = width || img.current.clientWidth;
         canvas.current.height = height || img.current.clientHeight;
-        container.current.style.width = (width || img.current.clientWidth) + 'px';
-        container.current.style.height = (height || img.current.clientHeight) + 'px';
-        var ctx = canvas.current.getContext('2d');
+        container.current.style.width = (width || img.current.clientWidth) + "px";
+        container.current.style.height =
+            (height || img.current.clientHeight) + "px";
+        var ctx = canvas.current.getContext("2d");
         if (!ctx)
             return;
         ctx.fillStyle = fillColor;
         if (onLoad)
             onLoad();
         renderPrefilledAreas();
+        highlightAreas();
     };
     var hoverOn = function (_a) {
         var area = _a.area, index = _a.index, event = _a.event;
         var _b;
-        var shape = (_b = event.target) === null || _b === void 0 ? void 0 : _b.getAttribute('shape');
+        var shape = (_b = event.target) === null || _b === void 0 ? void 0 : _b.getAttribute("shape");
         if (!shape)
             return;
-        if (active && ['draw' + shape]) {
+        if (active && ["draw" + shape]) {
             drawArea(area);
         }
+        if (multiple)
+            renderMultipleAreas(area);
         if (onMouseEnter)
             onMouseEnter(area, index, event);
     };
@@ -136,10 +150,12 @@ var ImageMapper = function (_a) {
         var area = _a.area, index = _a.index, event = _a.event;
         var _b;
         if (active && canvas.current) {
-            var ctx = (_b = canvas.current) === null || _b === void 0 ? void 0 : _b.getContext('2d');
+            var ctx = (_b = canvas.current) === null || _b === void 0 ? void 0 : _b.getContext("2d");
             if (!ctx)
                 return;
             ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+            if (highlightArea)
+                highlightAreas();
             renderPrefilledAreas();
         }
         if (onMouseLeave)
@@ -182,27 +198,38 @@ var ImageMapper = function (_a) {
         });
     };
     var drawArea = function (area) {
+        drawAreaWithColor(area, area.preFillColor || fillColor);
+    };
+    var drawAreaWithColor = function (area, color) {
         switch (area.shape) {
-            case 'rect':
-                drawrect(scaleCoords(area.coords), area.preFillColor || fillColor, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
+            case "rect":
+                drawrect(scaleCoords(area.coords), color, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
                 break;
-            case 'circle':
-                drawcircle(scaleCoords(area.coords), area.preFillColor || fillColor, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
+            case "circle":
+                drawcircle(scaleCoords(area.coords), color, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
                 break;
-            case 'poly':
-                drawpoly(scaleCoords(area.coords), area.preFillColor || fillColor, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
+            case "poly":
+                drawpoly(scaleCoords(area.coords), color, area.lineWidth || lineWidth, area.strokeColor || strokeColor);
                 break;
         }
+    };
+    var renderMultipleAreas = function (area) {
+        var areas = map.areas.filter(function (a) {
+            return a.name === area.name;
+        });
+        areas.map(function (a) {
+            drawAreaWithColor(a, a.fillColor || fillColor);
+        });
     };
     var computeCenter = function (area) {
         if (!area)
             return [0, 0];
         var scaledCoords = scaleCoords(area.coords);
         switch (area.shape) {
-            case 'circle':
+            case "circle":
                 return [scaledCoords[0], scaledCoords[1]];
-            case 'poly':
-            case 'rect':
+            case "poly":
+            case "rect":
             default: {
                 // Calculate centroid
                 var n_1 = scaledCoords.length / 2;
@@ -214,40 +241,50 @@ var ImageMapper = function (_a) {
             }
         }
     };
+    var highlightAreas = function () {
+        if (highlightArea) {
+            var selectedAreas = map.areas.filter((function (area) {
+                area.name === highlightArea;
+            }));
+            selectedAreas.map(function (area) {
+                drawAreaWithColor(area, highlightColor || fillColor);
+            });
+        }
+    };
     var renderAreas = function () {
         return map.areas.map(function (area, index) {
             var scaledCoords = scaleCoords(area.coords);
             var center = computeCenter(area);
             var extendedArea = __assign(__assign({}, area), { scaledCoords: scaledCoords, center: center });
-            return (React__default.createElement("area", { key: area._id || index, shape: area.shape, coords: scaledCoords.join(','), onMouseEnter: function (event) {
+            return (React__default.createElement("area", { key: area._id || index, shape: area.shape, coords: scaledCoords.join(","), onMouseEnter: function (event) {
                     return hoverOn({
                         area: extendedArea,
                         index: index,
-                        event: event
+                        event: event,
                     });
                 }, onMouseLeave: function (event) {
                     return hoverOff({
                         area: extendedArea,
                         index: index,
-                        event: event
+                        event: event,
                     });
                 }, onMouseMove: function (event) {
                     return mouseMove({
                         area: extendedArea,
                         index: index,
-                        event: event
+                        event: event,
                     });
                 }, onClick: function (event) {
                     return click({
                         area: extendedArea,
                         index: index,
-                        event: event
+                        event: event,
                     });
                 }, href: area.href }));
         });
     };
     return (React__default.createElement("div", { style: styles.container, ref: container },
-        React__default.createElement("img", { style: styles.img, src: src, useMap: "#" + map.name, alt: '', ref: img, onClick: imageClick, onMouseMove: imageMouseMove }),
+        React__default.createElement("img", { style: styles.img, src: src, useMap: "#" + map.name, alt: "", ref: img, onClick: imageClick, onMouseMove: imageMouseMove }),
         React__default.createElement("canvas", { ref: canvas, style: styles.canvas }),
         React__default.createElement("map", { name: map.name, style: styles.map }, renderAreas())));
 };

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 declare type AreaMouseEvent = Event | React.MouseEvent<HTMLAreaElement, MouseEvent>;
 export declare type AreaEvent = {
     area: Area;
@@ -7,10 +7,11 @@ export declare type AreaEvent = {
 };
 export declare type Area = {
     _id?: string;
-    shape: 'rect' | 'circle' | 'poly';
+    shape: "rect" | "circle" | "poly";
     coords: number[];
     href?: string;
     name?: string;
+    centroid?: number[];
     preFillColor?: string;
     lineWidth?: number;
     strokeColor?: string;
@@ -26,10 +27,13 @@ export interface ImageMapperProps {
     map: Map;
     fillColor?: string;
     strokeColor?: string;
+    highlightColor?: string;
+    highlightArea?: string;
     lineWidth?: number;
     width?: number;
     height?: number;
     active?: boolean;
+    multiple?: boolean;
     imgWidth?: number;
     onLoad?: () => void;
     onClick?: (area: Area, index: number, event: AreaMouseEvent) => void;
