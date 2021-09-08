@@ -200,8 +200,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       const ctx = canvas.current?.getContext("2d");
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
-      if (highlightArea) highlightAreas()
       renderPrefilledAreas();
+      if (highlightArea) highlightAreas()
     }
 
     if (onMouseLeave) onMouseLeave(area, index, event);
