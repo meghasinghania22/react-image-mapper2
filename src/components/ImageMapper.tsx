@@ -191,7 +191,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     if (active && ["draw" + shape]) {
       drawArea(area);
     }
-    if (multiple) renderMultipleAreas(area);
+    if (active && multiple) renderMultipleAreas(area);
+    if (active && highlightArea) highlightAreas()
     if (onMouseEnter) onMouseEnter(area, index, event);
   };
 
