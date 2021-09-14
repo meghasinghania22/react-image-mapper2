@@ -246,12 +246,12 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   const renderPrefilledAreas = () => {
     map.areas.map((area) => {
       if (!area.preFillColor) return;
-      drawArea(area);
+      drawAreaWithColor(area, area.preFillColor);
     });
   };
 
   const drawArea = (area: Area) => {
-    drawAreaWithColor(area, area.preFillColor || fillColor)
+    drawAreaWithColor(area, area.fillColor || fillColor)
   };
 
   const drawAreaWithColor = (area: Area, color: string) => {
