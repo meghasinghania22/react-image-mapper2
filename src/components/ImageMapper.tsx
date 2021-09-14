@@ -289,7 +289,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     });
 
     areas.map((a) => {
-      drawAreaWithColor(a, a.fillColor || fillColor)
+      drawAreaWithColor(a, a.preFillColor || fillColor)
     })
   }
 
