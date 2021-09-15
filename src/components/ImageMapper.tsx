@@ -202,7 +202,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
       renderPrefilledAreas();
-      if (highlightArea) highlightAreas()
+      if (!!highlightArea) highlightAreas()
     }
 
     if (onMouseLeave) onMouseLeave(area, index, event);
@@ -319,6 +319,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   };
 
   const highlightAreas = () => {
+    console.log('WHAT IS THIS', highlightArea)
     if (highlightArea) {
       const selectedAreas = map.areas.filter((area => {
         area.name === highlightArea

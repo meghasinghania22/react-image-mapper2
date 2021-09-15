@@ -134,8 +134,10 @@ var ImageMapper = function (_a) {
         if (active && ["draw" + shape]) {
             drawArea(area);
         }
-        if (multiple)
+        if (active && multiple)
             renderMultipleAreas(area);
+        if (active && highlightArea)
+            highlightAreas();
         if (onMouseEnter)
             onMouseEnter(area, index, event);
     };
@@ -148,7 +150,7 @@ var ImageMapper = function (_a) {
                 return;
             ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
             renderPrefilledAreas();
-            if (highlightArea)
+            if (!!highlightArea)
                 highlightAreas();
         }
         if (onMouseLeave)
@@ -187,11 +189,11 @@ var ImageMapper = function (_a) {
         map.areas.map(function (area) {
             if (!area.preFillColor)
                 return;
-            drawArea(area);
+            drawAreaWithColor(area, area.preFillColor);
         });
     };
     var drawArea = function (area) {
-        drawAreaWithColor(area, area.preFillColor || fillColor);
+        drawAreaWithColor(area, area.fillColor || fillColor);
     };
     var drawAreaWithColor = function (area, color) {
         switch (area.shape) {
@@ -211,7 +213,7 @@ var ImageMapper = function (_a) {
             return a.name === area.name;
         });
         areas.map(function (a) {
-            drawAreaWithColor(a, a.fillColor || fillColor);
+            drawAreaWithColor(a, a.preFillColor || fillColor);
         });
     };
     var computeCenter = function (area) {
@@ -235,6 +237,7 @@ var ImageMapper = function (_a) {
         }
     };
     var highlightAreas = function () {
+        console.log('WHAT IS THIS', highlightArea);
         if (highlightArea) {
             var selectedAreas = map.areas.filter((function (area) {
                 area.name === highlightArea;
