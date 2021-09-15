@@ -290,7 +290,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     });
 
     areas.map((a) => {
-      drawAreaWithColor(a, a.preFillColor || fillColor)
+      drawAreaWithColor(a, a.fillColor || fillColor)
     })
   }
 
@@ -319,11 +319,10 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   };
 
   const highlightAreas = () => {
-    console.log('WHAT IS THIS', highlightArea)
     if (highlightArea) {
-      const selectedAreas = map.areas.filter((area => {
+      const selectedAreas = map.areas.filter(area => {
         area.name === highlightArea
-      }))
+      })
 
       selectedAreas.map((area) => {
         drawAreaWithColor(area, highlightColor || fillColor)

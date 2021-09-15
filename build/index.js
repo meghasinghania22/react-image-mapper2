@@ -220,7 +220,7 @@ var ImageMapper = function (_a) {
             return a.name === area.name;
         });
         areas.map(function (a) {
-            drawAreaWithColor(a, a.preFillColor || fillColor);
+            drawAreaWithColor(a, a.fillColor || fillColor);
         });
     };
     var computeCenter = function (area) {
@@ -244,11 +244,10 @@ var ImageMapper = function (_a) {
         }
     };
     var highlightAreas = function () {
-        console.log('WHAT IS THIS', highlightArea);
         if (highlightArea) {
-            var selectedAreas = map.areas.filter((function (area) {
+            var selectedAreas = map.areas.filter(function (area) {
                 area.name === highlightArea;
-            }));
+            });
             selectedAreas.map(function (area) {
                 drawAreaWithColor(area, highlightColor || fillColor);
             });
