@@ -139,7 +139,7 @@ var ImageMapper = function (_a) {
         if (!shape)
             return;
         if (active) {
-            drawArea(area);
+            drawAreaWithColor(area, area.fillColor || fillColor);
             renderMultipleAreas(area);
         }
         if (onMouseEnter)
@@ -195,9 +195,6 @@ var ImageMapper = function (_a) {
             drawAreaWithColor(area, area.preFillColor);
         });
     };
-    var drawArea = function (area) {
-        drawAreaWithColor(area, area.fillColor || fillColor);
-    };
     var drawAreaWithColor = function (area, color) {
         switch (area.shape) {
             case "rect":
@@ -242,12 +239,12 @@ var ImageMapper = function (_a) {
         }
     };
     var highlightAreas = function () {
-        if (highlightArea) {
+        if (!!highlightArea) {
             var selectedAreas = map.areas.filter(function (area) {
                 return area.name === highlightArea;
             });
             selectedAreas.map(function (area) {
-                drawAreaWithColor(area, highlightColor || fillColor);
+                drawAreaWithColor(area, highlightColor);
             });
         }
     };

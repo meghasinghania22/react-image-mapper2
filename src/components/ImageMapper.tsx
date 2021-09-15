@@ -189,7 +189,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     if (!shape) return;
 
     if (active) {
-      drawArea(area);
+      drawAreaWithColor(area, area.fillColor || fillColor);
       renderMultipleAreas(area);
     }
     if (onMouseEnter) onMouseEnter(area, index, event);
@@ -248,10 +248,6 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       if (!area.preFillColor) return;
       drawAreaWithColor(area, area.preFillColor);
     });
-  };
-
-  const drawArea = (area: Area) => {
-    drawAreaWithColor(area, area.fillColor || fillColor)
   };
 
   const drawAreaWithColor = (area: Area, color: string) => {
@@ -320,13 +316,13 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   };
 
   const highlightAreas = () => {
-    if (highlightArea) {
+    if (!!highlightArea) {
       const selectedAreas = map.areas.filter(area => 
         area.name === highlightArea
       )
 
       selectedAreas.map((area) => {
-        drawAreaWithColor(area, highlightColor || fillColor)
+        drawAreaWithColor(area, highlightColor)
       })
     } 
   }
