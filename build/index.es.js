@@ -149,8 +149,8 @@ var ImageMapper = function (_a) {
                 return;
             ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
             renderPrefilledAreas();
-            highlightAreas();
         }
+        highlightAreas();
         if (onMouseLeave)
             onMouseLeave(area, index, event);
     };
