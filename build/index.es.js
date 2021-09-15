@@ -35,7 +35,7 @@ function __spreadArrays() {
 }
 
 var ImageMapper = function (_a) {
-    var src = _a.src, map = _a.map, _b = _a.fillColor, fillColor = _b === void 0 ? "rgba(255, 255, 255, 0.5)" : _b, _c = _a.strokeColor, strokeColor = _c === void 0 ? "rgba(0, 0, 0, 0.5)" : _c, _d = _a.highlightColor, highlightColor = _d === void 0 ? 'rgba(255, 255, 255, 0.5)' : _d, highlightArea = _a.highlightArea, _e = _a.lineWidth, lineWidth = _e === void 0 ? 1 : _e, width = _a.width, height = _a.height, active = _a.active, imgWidth = _a.imgWidth, multiple = _a.multiple, onLoad = _a.onLoad, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave, onMouseMove = _a.onMouseMove, onImageClick = _a.onImageClick, onImageMouseMove = _a.onImageMouseMove;
+    var src = _a.src, map = _a.map, _b = _a.fillColor, fillColor = _b === void 0 ? "rgba(255, 255, 255, 0.5)" : _b, _c = _a.strokeColor, strokeColor = _c === void 0 ? "rgba(0, 0, 0, 0.5)" : _c, _d = _a.highlightColor, highlightColor = _d === void 0 ? 'rgba(255, 0, 255, 0.5)' : _d, highlightArea = _a.highlightArea, _e = _a.lineWidth, lineWidth = _e === void 0 ? 1 : _e, width = _a.width, height = _a.height, active = _a.active, imgWidth = _a.imgWidth, multiple = _a.multiple, onLoad = _a.onLoad, onClick = _a.onClick, onMouseEnter = _a.onMouseEnter, onMouseLeave = _a.onMouseLeave, onMouseMove = _a.onMouseMove, onImageClick = _a.onImageClick, onImageMouseMove = _a.onImageMouseMove;
     var absPos = { position: "absolute", top: 0, left: 0 };
     var styles = {
         container: { position: "relative" },
@@ -136,10 +136,10 @@ var ImageMapper = function (_a) {
         }
         if (active && multiple)
             renderMultipleAreas(area);
-        if (active && highlightArea)
-            highlightAreas();
         if (onMouseEnter)
             onMouseEnter(area, index, event);
+        if (active && !!highlightArea)
+            highlightAreas();
     };
     var hoverOff = function (_a) {
         var area = _a.area, index = _a.index, event = _a.event;

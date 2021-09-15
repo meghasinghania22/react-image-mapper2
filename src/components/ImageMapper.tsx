@@ -58,7 +58,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   map,
   fillColor = "rgba(255, 255, 255, 0.5)",
   strokeColor = "rgba(0, 0, 0, 0.5)",
-  highlightColor = 'rgba(255, 255, 255, 0.5)',
+  highlightColor = 'rgba(255, 0, 255, 0.5)',
   highlightArea,
   lineWidth = 1,
   width,
@@ -192,8 +192,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       drawArea(area);
     }
     if (active && multiple) renderMultipleAreas(area);
-    if (active && highlightArea) highlightAreas()
     if (onMouseEnter) onMouseEnter(area, index, event);
+    if (active && !!highlightArea) highlightAreas()
   };
 
   const hoverOff = ({ area, index, event }: AreaEvent) => {
