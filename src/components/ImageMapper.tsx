@@ -192,8 +192,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       drawArea(area);
     }
     if (active && multiple) renderMultipleAreas(area);
+    if (active) highlightAreas()
     if (onMouseEnter) onMouseEnter(area, index, event);
-    if (active && !!highlightArea) highlightAreas()
   };
 
   const hoverOff = ({ area, index, event }: AreaEvent) => {
@@ -320,9 +320,9 @@ export const ImageMapper: FC<ImageMapperProps> = ({
 
   const highlightAreas = () => {
     if (highlightArea) {
-      const selectedAreas = map.areas.filter(area => {
+      const selectedAreas = map.areas.filter(area => 
         area.name === highlightArea
-      })
+      )
 
       selectedAreas.map((area) => {
         drawAreaWithColor(area, highlightColor || fillColor)

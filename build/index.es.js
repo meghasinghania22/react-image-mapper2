@@ -136,10 +136,10 @@ var ImageMapper = function (_a) {
         }
         if (active && multiple)
             renderMultipleAreas(area);
+        if (active)
+            highlightAreas();
         if (onMouseEnter)
             onMouseEnter(area, index, event);
-        if (active && !!highlightArea)
-            highlightAreas();
     };
     var hoverOff = function (_a) {
         var area = _a.area, index = _a.index, event = _a.event;
@@ -238,7 +238,7 @@ var ImageMapper = function (_a) {
     var highlightAreas = function () {
         if (highlightArea) {
             var selectedAreas = map.areas.filter(function (area) {
-                area.name === highlightArea;
+                return area.name === highlightArea;
             });
             selectedAreas.map(function (area) {
                 drawAreaWithColor(area, highlightColor || fillColor);
