@@ -101,6 +101,10 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     highlightColor
   ]);
 
+  useEffect(() => {
+    highlightAreas();
+  }, [highlightArea]);
+
   const drawrect = (
     coords: number[],
     fillColor: string,

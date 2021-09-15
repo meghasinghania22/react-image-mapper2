@@ -61,6 +61,9 @@ var ImageMapper = function (_a) {
         highlightArea,
         highlightColor
     ]);
+    useEffect(function () {
+        highlightAreas();
+    }, [highlightArea]);
     var drawrect = function (coords, fillColor, lineWidth, strokeColor) {
         var _a;
         var left = coords[0], top = coords[1], right = coords[2], bot = coords[3];
