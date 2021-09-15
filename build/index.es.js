@@ -133,11 +133,8 @@ var ImageMapper = function (_a) {
             return;
         if (active) {
             drawArea(area);
-        }
-        if (active && multiple)
             renderMultipleAreas(area);
-        if (active)
-            highlightAreas();
+        }
         if (onMouseEnter)
             onMouseEnter(area, index, event);
     };
@@ -208,12 +205,14 @@ var ImageMapper = function (_a) {
         }
     };
     var renderMultipleAreas = function (area) {
-        var areas = map.areas.filter(function (a) {
-            return a.name === area.name;
-        });
-        areas.map(function (a) {
-            drawAreaWithColor(a, a.fillColor || fillColor);
-        });
+        if (multiple) {
+            var areas = map.areas.filter(function (a) {
+                return a.name === area.name;
+            });
+            areas.map(function (a) {
+                drawAreaWithColor(a, a.fillColor || fillColor);
+            });
+        }
     };
     var computeCenter = function (area) {
         if (!area)

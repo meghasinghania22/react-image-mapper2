@@ -190,9 +190,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
 
     if (active) {
       drawArea(area);
+      renderMultipleAreas(area);
     }
-    if (active && multiple) renderMultipleAreas(area);
-    if (active) highlightAreas()
     if (onMouseEnter) onMouseEnter(area, index, event);
   };
 
@@ -285,13 +284,15 @@ export const ImageMapper: FC<ImageMapperProps> = ({
   };
 
   const renderMultipleAreas = (area: Area) => {
-    const areas = map.areas.filter(a => {
-      return a.name === area.name;
-    });
-
-    areas.map((a) => {
-      drawAreaWithColor(a, a.fillColor || fillColor)
-    })
+    if (multiple) {
+      const areas = map.areas.filter(a => {
+        return a.name === area.name;
+      });
+  
+      areas.map((a) => {
+        drawAreaWithColor(a, a.fillColor || fillColor)
+      })
+    }
   }
 
   const computeCenter = (area: Area) => {
@@ -327,7 +328,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       selectedAreas.map((area) => {
         drawAreaWithColor(area, highlightColor || fillColor)
       })
-    }
+    } 
   }
 
   const renderAreas = () => {
