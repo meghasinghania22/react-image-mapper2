@@ -131,7 +131,7 @@ var ImageMapper = function (_a) {
         var shape = (_b = event.target) === null || _b === void 0 ? void 0 : _b.getAttribute("shape");
         if (!shape)
             return;
-        if (active && ["draw" + shape]) {
+        if (active) {
             drawArea(area);
         }
         if (active && multiple)
@@ -150,8 +150,7 @@ var ImageMapper = function (_a) {
                 return;
             ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
             renderPrefilledAreas();
-            if (!!highlightArea)
-                highlightAreas();
+            highlightAreas();
         }
         if (onMouseLeave)
             onMouseLeave(area, index, event);

@@ -188,7 +188,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
 
     if (!shape) return;
 
-    if (active && ["draw" + shape]) {
+    if (active) {
       drawArea(area);
     }
     if (active && multiple) renderMultipleAreas(area);
@@ -202,7 +202,7 @@ export const ImageMapper: FC<ImageMapperProps> = ({
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
       renderPrefilledAreas();
-      if (!!highlightArea) highlightAreas()
+      highlightAreas()
     }
 
     if (onMouseLeave) onMouseLeave(area, index, event);
