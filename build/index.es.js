@@ -58,6 +58,8 @@ var ImageMapper = function (_a) {
         height,
         active,
         imgWidth,
+        highlightArea,
+        highlightColor
     ]);
     var drawrect = function (coords, fillColor, lineWidth, strokeColor) {
         var _a;

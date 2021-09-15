@@ -97,6 +97,8 @@ export const ImageMapper: FC<ImageMapperProps> = ({
     height,
     active,
     imgWidth,
+    highlightArea,
+    highlightColor
   ]);
 
   const drawrect = (
